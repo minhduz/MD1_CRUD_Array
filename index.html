@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body{
+            margin: 0 30px 0 30px;
+        }
+        .hienThi{
+            margin-top: 20px;
+        }
+        .header{
+            margin-top: 20px;
+            margin-left: 100px;
+        }
+        #search{
+            margin-left: 100px;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Quản lý học sinh lớp JV08/2022</h1><br>
+    <label>Add a new student: </label>
+    <input id = name type="text" placeholder="Họ và tên">
+    <button onclick="createStudent()">Create Student </button>
+    <input id = search type="text" placeholder="Search" style="width: 200px;">
+
+</div>
+<div class="hienThi">
+    <table class="table table-striped" style="border: 2px solid black; text-align: center">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Name</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody id="drawTable">
+
+        </tbody>
+    </table>
+</div>
+
+</body>
+<script>
+
+
+    let listStudents = []
+    function showListStudent(){
+        let drawTable = ''
+        let class_tr = ''
+        for (let i = 0; i < listStudents.length; i++) {
+            let j = i + 1
+            if(i%2===0){
+                class_tr='table-primary'
+            } else {
+                class_tr='table-warning'
+            }
+            drawTable+= '<tr>'+ '<td>'+j+'</td>'+ '<td>'+listStudents[i]+'</td>'
+                + '<td><button class="btn btn-primary" onclick="updateStudent(' + i + ')">Edit</button></td>'
+                + '<td><button class="btn btn-danger" onclick="deleteStudent(' + i + ')">Delete</button></td>'
+                + '</tr>'
+        }
+        document.getElementById('drawTable').innerHTML = drawTable
+    }
+
+    showListStudent()
+
+    function createStudent(){
+        let newStudent = document.getElementById('name').value
+        if (newStudent.trim() === ''){
+            alert('Please enter name: ')
+        } else {
+            console.log(newStudent)
+            listStudents.push(newStudent)
+            alert('Successfully')
+            showListStudent()
+        }
+    }
+
+    function updateStudent(id){
+        let editStudent = prompt('Enter name: ')
+        console.log('id ======== ',id)
+        listStudents[id] = editStudent;
+        alert('Update successfully')
+        showListStudent();
+
+    }
+
+    function deleteStudent(id) {
+        console.log('id ======== ',id)
+        let con = confirm('Are you sure to delete')
+        if (con){
+            listStudents.splice(id,1)
+        } else {
+            return
+        }
+        showListStudent()
+    }
+
+</script>
+</html>
